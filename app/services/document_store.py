@@ -1,6 +1,6 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct, VectorParams, Distance
-from config import settings
+from app.config import settings
 
 class DocumentStore:
     def __init__(self, embedding_service) :

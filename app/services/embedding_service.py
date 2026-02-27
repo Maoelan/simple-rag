@@ -1,5 +1,5 @@
 import random
-from config import settings
+from app.config import settings
 
 class EmbeddingService:
     def __init__(self) :
