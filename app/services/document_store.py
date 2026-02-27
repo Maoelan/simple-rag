@@ -1,5 +1,6 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct, VectorParams, Distance
+from config import settings
 
 class DocumentStore:
     def __init__(self, embedding_service) :
@@ -9,10 +10,10 @@ class DocumentStore:
         self.qdrant = None
 
         try:
-            self.qdrant = QdrantClient("http://localhost:6333")
+            self.qdrant = QdrantClient(settings.qdrant_url)
             self.qdrant.recreate_collection(
-                collection_name="demo_collection",
-                vectors_config=VectorParams(size=128, distance=Distance.COSINE)
+                collection_name=settings.collection_name,
+                vectors_config=VectorParams(size=settings.vector_size, distance=Distance[settings.distance])
             )
             self.using_qdrant = True
         except Exception as e:
@@ -25,7 +26,7 @@ class DocumentStore:
 
         if self.using_qdrant:
             self.qdrant.upsert(
-                collection_name="demo_collection",
+                collection_name=settings.collection_name,
                 points=[PointStruct(id=doc_id, vector=emb, payload=payload)]
             )
         else :
@@ -36,7 +37,7 @@ class DocumentStore:
         emb = self.embedding_service.embed(query)
         result = []
         if self.using_qdrant:
-            hits = self.qdrant.search(collection_name="demo_collection", query_vector=emb, limit=2)
+            hits = self.qdrant.search(collection_name=settings.collection_name, query_vector=emb, limit=2)
             for hit in hits:
                 result.append(hit.payload["text"])
         else:

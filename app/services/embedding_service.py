@@ -1,6 +1,9 @@
+import random
+from config import settings
+
 class EmbeddingService:
     def __init__(self) :
-        self.vector_size = 128
+        self.vector_size = settings.vector_size
 
     def embed(self, text: str) -> list[float]:
         random.seed(abs(hash(text)) % 10000)
