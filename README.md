@@ -29,8 +29,7 @@
 
    ```bash
    docker-compose up -d
-   # or
-   docker run -d -p 6333:6333 --name qdrant-container my-qdrant
+   docker run -d -p 6333:6333 --name qdrant-container qdrant/qdrant
    ```
 
    > **Note:** This step is optional. If Docker is not running, the app will automatically fall back to in-memory storage and still run normally.
