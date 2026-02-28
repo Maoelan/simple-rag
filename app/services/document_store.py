@@ -1,6 +1,7 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct, VectorParams, Distance
 from app.config import settings
+import uuid
 
 class DocumentStore:
     def __init__(self, embedding_service) :
@@ -21,7 +22,7 @@ class DocumentStore:
     
     def add(self, text: str):
         emb = self.embedding_service.embed(text)
-        doc_id = len(self.docs)
+        doc_id = str(uuid.uuid4())
         payload = {"text": text}
 
         if self.using_qdrant:

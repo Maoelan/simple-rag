@@ -1,5 +1,4 @@
 venv/
 qdrant_storage/
 __pycache__/
-readme.md
 .env
